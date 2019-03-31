@@ -67,7 +67,20 @@ public class MyLinkedList<E> {
  }
  public E removeFront() {
    E temp = start.getData();
-   
+   start.Next().setPrev(null);
+   start = start.Next();
+   length--;
+   return temp;
+ }
+ private Node getNode(int index) {
+   Node temp = start;
+   for (int count = 0; count != index; count++) {
+     temp = temp.Next();
+   }
+   return temp;
+ }
+ public int size() {
+   return length;
  }
   public String toString(){
    String s = "[";
@@ -91,10 +104,10 @@ public class MyLinkedList<E> {
  class Node {
    private E data;
    private Node next,prev;
-   public Integer getData() {
+   public E getData() {
      return data;
    }
-   public E setData(int value) {
+   public E setData(E value) {
      E temp = data;
      data = value;
      return temp;
@@ -111,7 +124,7 @@ public class MyLinkedList<E> {
    public void setPrev(Node newPrev) {
      prev = newPrev;
    }
-   public Node(Integer newData, Node newNext, Node newPrev){
+   public Node(E newData, Node newNext, Node newPrev){
      data = newData;
      next = newNext;
      prev = newPrev;
