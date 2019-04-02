@@ -17,8 +17,11 @@ public class Radix {
       }
     }
     for (MyLinkedList i : buckets) {
-      if (i.size() > 0) merged.extend(i);
-      i.clear();
+          System.out.println("Hi2");
+      if (i.size() > 0) {
+        merged.extend(i);
+        i.clear();
+      }
     }
     count++;
     while (fill > 0) {
