@@ -55,8 +55,8 @@ public class MyLinkedList<E> {
       if (length > 0 && other.size() > 0) {
         end.setNext(other.start);
         end.Next().setPrev(end);
-        other.start = null;
         end = other.end;
+        length += other.size();
         other.length = 0;
       }
       else if (length == 0 && other.size() > 0) {
