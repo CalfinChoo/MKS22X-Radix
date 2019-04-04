@@ -2,13 +2,12 @@ public class Radix {
   public static void radixsort(int[]data){
     int fill = findMax(data) - 1;
     int count = 0;
+    @SuppressWarnings("unchecked")
     MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
-    MyLinkedList<Integer> merged = new MyLinkedList();
-    for (int i = 0; i < buckets.length; i++) buckets[i] = new MyLinkedList();
+    MyLinkedList<Integer> merged = new MyLinkedList<Integer>();
+    for (int i = 0; i < buckets.length; i++) buckets[i] = new MyLinkedList<Integer>();
     for (int i : data) {
-      System.out.println("Hi");
       int digit = Math.abs((int)(i/Math.pow(10, count)) % 10);
-      System.out.println(digit + "");
       if (i < 0) {
         buckets[9 - digit].add(i);
       }
@@ -16,12 +15,8 @@ public class Radix {
         buckets[digit + 10].add(i);
       }
     }
-    for (MyLinkedList i : buckets) {
-          System.out.println("Hi2");
-      if (i.size() > 0) {
-        merged.extend(i);
-        i.clear();
-      }
+    for (MyLinkedList<Integer> i : buckets) {
+      merged.extend(i);
     }
     count++;
     while (fill > 0) {
@@ -35,12 +30,14 @@ public class Radix {
           buckets[digit + 10].add(i);
         }
       }
-      for (MyLinkedList i : buckets) {
-        if (i.size() > 0) merged.extend(i);
-        i.clear();
+      for (MyLinkedList<Integer> i : buckets) {
+        merged.extend(i);
       }
       count++;
       fill--;
+    }
+    for (int i = 0; i < data.length; i++) {
+      data[i] = merged.removeFront();
     }
   }
   public static int findMax(int[] data) {

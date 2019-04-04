@@ -3,6 +3,8 @@ public class MyLinkedList<E> {
   private Node start,end;
   public MyLinkedList() {
    length = 0;
+   start = null;
+   end = start;
   }
   public void clear() {
     length = 0;
@@ -10,20 +12,15 @@ public class MyLinkedList<E> {
     end = null;
   }
   public boolean add(E value) {
-   Node newNode = new Node(value, null, end);
    if (length == 0) {
-     start = newNode;
-     length++;
-     return true;
+     start = new Node(value, null, null);
+     end = start;
    }
-   if (length == 1) {
-     start.setNext(newNode);
-     end = start.Next();
-     length++;
-     return true;
+   else {
+     Node nsNode = new Node(value, end, null);
+     end.setNext(nsNode);
+     end = nsNode;
    }
-   end.setNext(newNode);
-   end = newNode;
    length++;
    return true;
  }
@@ -53,8 +50,8 @@ public class MyLinkedList<E> {
       //The size of other is reduced to 0
       //The size of this is now the combined sizes of both original lists
       if (length > 0 && other.size() > 0) {
+        other.start.setPrev(end);
         end.setNext(other.start);
-        end.Next().setPrev(end);
         end = other.end;
         length += other.size();
         other.length = 0;
@@ -64,10 +61,11 @@ public class MyLinkedList<E> {
         end = other.end;
         length = other.size();
       }
+      other.clear();
  }
  public E removeFront() {
    E temp = start.getData();
-   start.Next().setPrev(null);
+   if (length > 1) start.Next().setPrev(null);
    start = start.Next();
    length--;
    return temp;
